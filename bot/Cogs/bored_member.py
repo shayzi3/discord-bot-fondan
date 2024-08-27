@@ -4,25 +4,20 @@ import disnake
 from datetime import datetime as dt
 from disnake.ext import commands
 
-from bot.scripts.bored_yesno.response import Responses
+from bot.scripts.bored_member.get_phrase import GetPhrase
 
 
-class AioCog(commands.Cog):
+class BoredMember(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
-        self.responses = Responses()
+        self.get_phrase = GetPhrase()
         
-        
+    
+    @commands.cooldown(1, 5,  commands.BucketType.user)
     @commands.slash_command(description='Чем заняться когда скучно?')
-    async def bored(self, inter: disnake.CmdInter):
-        await inter.response.defer()
-        
-        data = await self.responses.api_bored()
-        if not data:
-            return await inter.send('Не получилось выполнить запрос. Попробуйте позже.', ephemeral=True)
-        
+    async def bored(self, inter: disnake.CmdInter): 
         embed = disnake.Embed(
-            description=data,
+            description=await self.get_phrase.bored_phrase(),
             colour=disnake.Colour.blue(),
             timestamp=dt.now()
         )
@@ -30,7 +25,8 @@ class AioCog(commands.Cog):
         
         
         
-    @commands.slash_command(description='Рандомный участник')
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    @commands.slash_command(description='Рандомный участник.')
     async def random_member(self, inter: disnake.CmdInter, text: str  = None):
         member = random.choice([mem for mem in inter.guild.members]).mention
         
@@ -41,6 +37,9 @@ class AioCog(commands.Cog):
         )
         await inter.send(embed=embed, delete_after=300)
         
+                
+        
+        
         
 def setup(bot: commands.Bot):
-    bot.add_cog(AioCog(bot))
+    bot.add_cog(BoredMember(bot))
