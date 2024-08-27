@@ -8,10 +8,11 @@ from config import secret
 
 
 bot = commands.Bot(
-    command_prefix = '$', 
+    command_prefix = '-', 
     help_command = None, 
     intents = disnake.Intents.all(),
     activity = disnake.Activity(name='Нарды'),
+    test_guilds=[1198187444684734505 ],
     reload=True
 )
 
