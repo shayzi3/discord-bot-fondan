@@ -18,15 +18,15 @@ class DataBaseFuncs(DataBase):
         cash: int,
         mode: BaseMode
     ) -> None | bool:
-          
+        
+        user_cash = await cls.get_balance(id_guild, id_member)
+        
         async with cls.session.begin() as conn:
-            user_cash = await cls.get_balance(id_guild, id_member)
-            
-            if mode == BaseMode.ON:         
+            if mode == BaseMode.ON: 
                 sttm = (
-                    update(Member). 
-                    where(guild_id=id_guild, member_id=id_member).
-                    values(cash=user_cash + cash)
+                    update(Member).
+                    filter_by(guild_id=id_guild, member_id=id_member).
+                    values(member_cash=user_cash + cash)
                 )
                 
             elif mode == BaseMode.OFF:
@@ -34,19 +34,19 @@ class DataBaseFuncs(DataBase):
                     return False
                     
                 sttm = (
-                    update(Member). 
-                    where(guild_id=id_guild, member_id=id_member).
-                    values(cash=user_cash - cash)    
+                    update(Member).
+                    filter_by(guild_id=id_guild, member_id=id_member).
+                    values(member_cash=user_cash - cash)  
                 )
-                
+                 
             elif mode == BaseMode.CHECK:
                 if user_cash >= cash:
                     return True
                 return None
-               
-        await conn.execute(sttm)
-        
-        
+            
+            
+            await conn.execute(sttm)
+
         
     @classmethod
     async def insert_new_user(
@@ -147,6 +147,31 @@ class DataBaseFuncs(DataBase):
                 values(data)
             )
             await conn.execute(sttm)
+            
+            
+    @classmethod
+    async def payment(
+        cls,
+        id_guild: int,
+        id_author: int,
+        id_member: int,
+        moneys: int
+    ) -> None:
+        # id_author - send moneys
+        # id_member - receive moneys
+
+        await cls.balance(
+            id_guild=id_guild,
+            id_member=id_author,
+            cash=moneys,
+            mode=BaseMode.OFF,
+        )
+        await cls.balance(
+            id_guild=id_guild,
+            id_member=id_member,
+            cash=moneys,
+            mode=BaseMode.ON,
+        )
 
 
           

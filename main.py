@@ -11,8 +11,8 @@ bot = commands.Bot(
     command_prefix = '-', 
     help_command = None, 
     intents = disnake.Intents.all(),
-    activity = disnake.Activity(name='Нарды'),
-    test_guilds=[1198187444684734505 ],
+    activity = disnake.Activity(name='Нарды', state='Жду твоего сообщения...'),
+    test_guilds=[1198187444684734505],
     reload=True
 )
 

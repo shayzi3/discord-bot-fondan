@@ -1,9 +1,11 @@
+import random
 import disnake
-import sqlite3 as sql
 
 from disnake.ext import commands
-from disnake import CmdInter, Colour
-from other import onBalance
+
+from database.src.base import data_funcs
+from database.src.schemas import BaseMode
+
 
 
 class GiftCog(commands.Cog):
@@ -11,22 +13,26 @@ class GiftCog(commands.Cog):
         self.bot = bot
         
         
-    # Команда для получения подарка
-    @commands.cooldown(1, 7199, commands.BucketType.user)
+    @commands.cooldown(1, 7200, commands.BucketType.user)
     @commands.slash_command(description='Подарок!')
-    async def getgift(self, inter: CmdInter) -> None:
-        await onBalance(inter.guild.id, inter.author.id, 25)   # пополняем баланс участника на 25 монет
+    async def get_gift(self, inter: disnake.CmdInter) -> None:
+        await inter.response.defer(ephemeral=True)
         
-        emb = disnake.Embed(title='Подарок! 🎁', colour=Colour.dark_blue(), description=' **Ты получаешь 25 монет!** ')
-        emb.set_footer(text=inter.author.name, icon_url=inter.author.avatar)
-        await inter.send(embed=emb, ephemeral=True, delete_after=30.0)
+        await data_funcs.balance(
+            id_guild=inter.guild.id,
+            id_member=inter.author.id,
+            cash=25,
+            mode=BaseMode.ON
+        )
+        
+        embed = disnake.Embed(
+            title='Подарок! 🎁', 
+            colour=disnake.Colour.blue(), 
+            description=' **Ты получаешь 25 монет!** '
+        )
+        await inter.send(embed=embed)
         
         
-    # Обрабатываем ошибку на повторное использование команды
-    @getgift.error
-    async def gift_error(self, inter: CmdInter, error) -> None:
-        if isinstance(error, commands.CommandOnCooldown):
-            await inter.send(f'{inter.author.mention}, подарка ещё нет, потерпи! Обновление каждые 2 часа.', delete_after=30.0, ephemeral=True)
         
         
 def setup(bot: commands.Bot) -> None:

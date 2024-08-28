@@ -12,8 +12,11 @@ class MemberJoinCog(commands.Cog):
         
         
     # Команда для показа карточки участника
+    @commands.cooldown(1, 60, commands.BucketType.user)
     @commands.slash_command(description='Профиль участника в виде карточки.')
     async def usercard(self, inter: disnake.CmdInter, member: disnake.Member = None):
+        await inter.response.defer(ephemeral=True)
+        
         if member:
             await self.card.usercad(ctx=inter, user=member)
             
