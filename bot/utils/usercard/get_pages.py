@@ -2,8 +2,7 @@ import disnake
 
 from datetime import datetime as dt
 
-from database.src.models import Member
-
+from database.src.json.base import json_funcs
 
 
 async def return_pages(
@@ -41,10 +40,13 @@ async def return_pages(
           timestamp=dt.now(), 
           colour=disnake.Colour.dark_magenta()
      )
+     msg = await json_funcs.get_member_messages(user.id)
      
      page3.set_footer(text='Page 3/3')
      page3.add_field(name='Balance', value=balance, inline=False)
      page3.add_field(name='Roles', value=roles, inline=False)
+     page3.add_field(name='Messages', value=msg, inline=False)
+     
      page3.set_thumbnail(url=user.avatar)
                
                

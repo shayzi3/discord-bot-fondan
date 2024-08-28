@@ -2,8 +2,8 @@ import disnake
 
 from sqlalchemy import update, select, insert, delete
 
-from database.src.models import DataBase, Member
-from database.src.schemas import BaseMode
+from database.src.db.models import DataBase, Member
+from database.src.db.schemas import BaseMode
    
 
 
@@ -174,7 +174,4 @@ class DataBaseFuncs(DataBase):
         )
 
 
-          
-     
-    
 data_funcs = DataBaseFuncs()

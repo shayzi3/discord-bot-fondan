@@ -4,7 +4,7 @@ import disnake
 from datetime import datetime as dt
 from disnake.ext import commands
 
-from database.src.base import data_funcs
+from database.src.db.base import data_funcs
 from assets.pictures import bot_images
 
 

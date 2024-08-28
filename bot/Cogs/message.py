@@ -1,49 +1,37 @@
 # Import modules
-import asyncio
 
-import disnake
-import sqlite3 as sql
-
+from string import ascii_letters
 from disnake.ext import commands
 from disnake import MessageCommandInteraction
-from loguru import logger
-from numba import prange
+
+from database.src.json.base import json_funcs
 
 
-logger.add('logging.log', format='{time} {level} {message}', level='ERROR')    # Write logs
 
-
-# Cog with command event on_message
-class MessageCog(commands.Cog):
+class Messages(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
         
+        self.letters = 'ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ' + ascii_letters.upper()
         
-    # Creating event on_message for interections with chat
-    @logger.catch
+    
     @commands.Cog.listener()
     async def on_message(self, message: MessageCommandInteraction) -> None:
         await self.bot.process_commands(message)
         
         if message.author.id != self.bot.user.id:
-              
-            messages: list[str] = message.content.split()
-            summa = 0
-                
-            for msg in prange(len(messages)):
-                for letter in prange(len(messages[msg]) - 1):
-                        
-                    if messages[msg][letter].isupper():
-                        summa += 1
-                            
-            if summa >= len(''.join(messages)) / 1.5:
-                await message.delete()
-                    
-                title = f'{message.author.mention}, использование CAPS запрещено❗'
-                messages = await message.channel.send(title, delete_after=10.0)   # Send 'Use to CAPS forbidden!'
+            msg = message.content.replace(' ', '')
             
+            if len(msg) >= 5:
+                if len(msg.strip(self.letters)) <= 1:
+                    await message.delete()
+                        
+                    title = f'{message.author.mention}, использование CAPS запрещено❗'
+                    return await message.channel.send(title, delete_after=120) 
+            
+            await json_funcs.update_member(member=message.author)
+                
         
         
-# Adding cog in bot
 def setup(bot: commands.Bot) -> None:
-    bot.add_cog(MessageCog(bot))
+    bot.add_cog(Messages(bot))

@@ -3,8 +3,8 @@ import disnake
 
 from disnake.ext import commands
 
-from database.src.base import data_funcs
-from database.src.schemas import BaseMode
+from database.src.db.base import data_funcs
+from database.src.db.schemas import BaseMode
 
 
 
