@@ -3,6 +3,7 @@ import disnake
 from sqlalchemy import update, select, insert, delete
 
 from database.src.models import DataBase, Member
+from database.src.schemas import BaseMode
    
 
 
@@ -14,34 +15,32 @@ class DataBaseFuncs(DataBase):
         cls,
         id_guild: int,
         id_member: int,
-        cash_member: int,
-        mode: str
+        cash: int,
+        mode: BaseMode
     ) -> None | bool:
           
         async with cls.session.begin() as conn:
-            if mode == 'on':         
+            user_cash = await cls.get_balance(id_guild, id_member)
+            
+            if mode == BaseMode.ON:         
                 sttm = (
                     update(Member). 
                     where(guild_id=id_guild, member_id=id_member).
-                    values(cash=+cash_member)
-                         
+                    values(cash=user_cash + cash)
                 )
-            elif mode == 'off':
-                sttm = (
-                    update(Member). 
-                    where(guild_id=id_guild, member_id=id_member).
-                    values(cash=-cash_member)
-                         
-                )
-            elif mode == 'check':
-                sttm = select(Member).filter_by(
-                    guild_id=id_guild, 
-                    member_id=id_member
-                )
-                result = await conn.execute(sttm)
-                result = result.scalar()
+                
+            elif mode == BaseMode.OFF:
+                if user_cash < cash:
+                    return False
                     
-                if result.member_cash >= cash_member:
+                sttm = (
+                    update(Member). 
+                    where(guild_id=id_guild, member_id=id_member).
+                    values(cash=user_cash - cash)    
+                )
+                
+            elif mode == BaseMode.CHECK:
+                if user_cash >= cash:
                     return True
                 return None
                
@@ -78,7 +77,7 @@ class DataBaseFuncs(DataBase):
         id_guild: int,
         id_member: int
     ) -> None:
-        async with  cls.session.begin() as conn:
+        async with cls.session.begin() as conn:
             sttm = (
                 delete(Member).filter_by(
                     guild_id=id_guild,
