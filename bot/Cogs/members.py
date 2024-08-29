@@ -5,6 +5,7 @@ from datetime import datetime as dt
 from disnake.ext import commands
 
 from database.src.db.base import data_funcs
+from database.src.json.base import json_funcs
 from assets.pictures import bot_images
 
 
@@ -37,6 +38,7 @@ class MembersAction(commands.Cog):
                     id_guild=member.guild.id,
                     id_member=member.id
                )
+               await json_funcs.delete_member(member.id)
           
           
           

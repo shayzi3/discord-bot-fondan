@@ -3,6 +3,7 @@ import disnake
 from disnake.ext import commands
 
 from database.src.db.base import data_funcs
+from database.src.json.base import json_funcs
 
 
 
@@ -36,7 +37,7 @@ class GuildAction(commands.Cog):
      @commands.Cog.listener()
      async def on_guild_remove(self, guild: disnake.Guild) -> None:
           await data_funcs.delete_guild(id_guild=guild.id)
-          
+          await json_funcs.delete_guild(guild_id=guild.id)
           
 
 

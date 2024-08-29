@@ -13,7 +13,7 @@ class BoredMember(commands.Cog):
         self.get_phrase = GetPhrase()
         
     
-    @commands.cooldown(1, 5,  commands.BucketType.user)
+    @commands.cooldown(1, 8,  commands.BucketType.user)
     @commands.slash_command(description='Чем заняться когда скучно?')
     async def bored(self, inter: disnake.CmdInter): 
         embed = disnake.Embed(
@@ -25,7 +25,7 @@ class BoredMember(commands.Cog):
         
         
         
-    @commands.cooldown(1, 5, commands.BucketType.user)
+    @commands.cooldown(1, 8, commands.BucketType.user)
     @commands.slash_command(description='Рандомный участник.')
     async def random_member(self, inter: disnake.CmdInter, text: str  = None):
         member = random.choice([mem for mem in inter.guild.members]).mention

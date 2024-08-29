@@ -46,8 +46,27 @@ class JsonDataFuncs:
      async def get_member_messages(cls, member_id: int) -> int:
           file = await cls.__get_dict_from_file()
           return file[str(member_id)]['member_messages']
+     
+          
+     @classmethod
+     async def delete_member(cls, member_id: int) -> None:
+          file = await cls.__get_dict_from_file()
+          
+          if str(member_id) in file.keys():
+               del file[str(member_id)]
+               await cls.__save_dict_in_file(file)
+          
+          
+     @classmethod
+     async def delete_guild(cls, guild_id: int):
+          file = await cls.__get_dict_from_file()
+          
+          new = {}
+          for key, value in file.items():
+               if value['guild_id'] != guild_id:
+                    new[key] = value
+                    
+          await cls.__save_dict_in_file(new)
 
-          
-          
 
 json_funcs = JsonDataFuncs()

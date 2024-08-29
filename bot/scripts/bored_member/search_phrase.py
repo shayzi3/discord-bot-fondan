@@ -62,14 +62,3 @@ def intrigue_dating(url, data: list[str]) -> None:
                     
      with open('bot/scripts/bored_member/phrase.json', 'w', encoding='utf-8') as file:
           file.write(json.dumps(data, indent=2, ensure_ascii=False))     
-     
-     
-     
-def main():
-     result = lifehacker('https://lifehacker.ru/chem-zanyatsya-doma/')
-     result2 = thevoicemag('https://www.thevoicemag.ru/lifestyle/stil-zhizni/chem-zanyatsya-kogda-ochen-skuchno-samye-neobychnye-varianty/', result)
-     intrigue_dating('https://intrigue.dating/interesnoe/chem-zanyatsya-kogda-skuchno-200-idey-chtoby-perestat-tuhnut/', result2)
-     
-     
-if __name__ == '__main__':
-     main()

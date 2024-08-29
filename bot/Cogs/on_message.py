@@ -1,5 +1,3 @@
-# Import modules
-
 from string import ascii_letters
 from disnake.ext import commands
 from disnake import MessageCommandInteraction

@@ -37,7 +37,7 @@ class Economy(commands.Cog):
         
     
     
-    @commands.cooldown(1, 60, commands.BucketType.user)
+    @commands.cooldown(1, 75, commands.BucketType.user)
     @commands.slash_command(description='Отправить деньги.')
     async def pay(self, inter: disnake.CmdInter, member: disnake.Member, money: int, comment: str | None = None) -> None:
         if inter.author.id != member.id:
@@ -66,7 +66,7 @@ class Economy(commands.Cog):
             
             
             
-    @commands.cooldown(1, 15, commands.BucketType.user)
+    @commands.cooldown(1, 12, commands.BucketType.user)
     @commands.slash_command(description='Ваш баланс')
     async def money(self, inter: disnake.CmdInter, member: disnake.Member | None = None) -> None:
         moneys = await data_funcs.get_balance(
