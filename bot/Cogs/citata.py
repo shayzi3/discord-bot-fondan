@@ -1,4 +1,3 @@
-import random
 import disnake
 
 from datetime import datetime as dt
@@ -21,7 +20,7 @@ class CitataStatham(commands.Cog):
                colour=disnake.Colour.blue(),
                timestamp=dt.now()
           )
-          embed.set_image(url=random.choice(citata))
+          embed.set_image(url=citata)
           await inter.send(embed=embed, ephemeral=True)
           
           

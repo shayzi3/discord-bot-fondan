@@ -1,3 +1,4 @@
+import random
 import json
 import requests
 
@@ -30,7 +31,9 @@ class Stathtam:
      @staticmethod
      async def get_citata() -> list[str]:
           with open('bot/scripts/statham/statham.json', 'r') as file:
-               return json.loads(file.read())
+               read = json.loads(file.read())
+          
+          return random.choice(read)
      
      
 statham = Stathtam()
