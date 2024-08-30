@@ -1,7 +1,6 @@
 import os
 import disnake
 
-from datetime import datetime as dt
 from disnake.ext import commands
 
 from bot.scripts.getters import Get
@@ -15,16 +14,15 @@ class Wallpaper(commands.Cog):
           
           
           
-     @commands.cooldown(1, 90, commands.BucketType.user)
+     @commands.cooldown(1, 65, commands.BucketType.user)
      @commands.slash_command(description='Обои рабочего стола')
      async def wallpaper(self, inter: disnake.CmdInter) -> None:
-          wallpaper = await self.get.get_wallpaper()
-          embed = disnake.Embed(
-               colour=disnake.Colour.blue(),
-               timestamp=dt.now()
-          )
-          embed.set_image(url=wallpaper)
-          await inter.send(embed=embed, ephemeral=True)          
+          await inter.response.defer(ephemeral=True)
+          
+          wallpaper_path = await self.get.get_wallpaper(inter.author.id)
+          
+          await inter.send(file=disnake.File(wallpaper_path))
+          os.remove(wallpaper_path)  
           
           
           
