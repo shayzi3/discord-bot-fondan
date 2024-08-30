@@ -15,6 +15,7 @@ bot = commands.Bot(
     test_guilds=[1198187444684734505]
 )
 
+
 @bot.event
 async def on_ready():
     logger.info(f'Bot {bot.user.name} ready!')    
