@@ -19,7 +19,11 @@ bot = commands.Bot(
 @bot.event
 async def on_ready():
     logger.info(f'Bot {bot.user.name} ready!')    
-    bot.load_extensions('bot/Cogs/')              
+    
+    bot.load_extensions('bot/Cogs/economy/')
+    bot.load_extensions('bot/Cogs/entertainment/')
+    bot.load_extensions('bot/Cogs/server/')    
+    bot.load_extensions('bot/Cogs/moder/')        
 
 
 if __name__ == '__main__':

@@ -7,7 +7,7 @@ from bot.scripts.getters import Get
 
 
 
-class CitataStatham(commands.Cog):
+class Statham(commands.Cog):
      def __init__(self, bot: commands.Bot) -> None:
           self.bot = bot
           self.get = Get()
@@ -27,4 +27,4 @@ class CitataStatham(commands.Cog):
           
           
 def setup(bot: commands.Bot):
-     bot.add_cog(CitataStatham(bot))
+     bot.add_cog(Statham(bot))

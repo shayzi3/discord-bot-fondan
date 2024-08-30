@@ -12,7 +12,7 @@ class Avatar(commands.Cog):
           
      
      @commands.cooldown(1, 5, commands.BucketType.user)
-     @commands.slash_command(description='Аватар участника сервера.')
+     @commands.slash_command(description='Аватар участника сервера')
      async def avatar(self, inter: disnake.CmdInter, member: disnake.Member | None = None) -> None:
           if not member:
                members = [mem for mem in inter.guild.members if not mem.bot]

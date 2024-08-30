@@ -8,14 +8,14 @@ from database.src.db.schemas import BaseMode
 
 
 
-class GiftCog(commands.Cog):
+class Gift(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
         
         
     @commands.cooldown(1, 7200, commands.BucketType.user)
     @commands.slash_command(description='Подарок!')
-    async def get_gift(self, inter: disnake.CmdInter) -> None:
+    async def gift(self, inter: disnake.CmdInter) -> None:
         await inter.response.defer(ephemeral=True)
         
         await data_funcs.balance(
@@ -36,4 +36,4 @@ class GiftCog(commands.Cog):
         
         
 def setup(bot: commands.Bot) -> None:
-    bot.add_cog(GiftCog(bot))
+    bot.add_cog(Gift(bot))

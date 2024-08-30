@@ -3,7 +3,7 @@ import disnake
 from disnake.ext import commands
 
 
-class PurgeMessage(commands.Cog):
+class Purge(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
         
@@ -23,4 +23,4 @@ class PurgeMessage(commands.Cog):
 
 
 def setup(bot: commands.Bot) -> None:
-    bot.add_cog(PurgeMessage(bot))
+    bot.add_cog(Purge(bot))

@@ -7,7 +7,7 @@ from disnake.ext import commands
 from bot.scripts.getters import Get
 
 
-class BoredMember(commands.Cog):
+class Bored(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         self.get = Get()
@@ -23,21 +23,7 @@ class BoredMember(commands.Cog):
         )
         await inter.send(embed=embed, ephemeral=True)
         
-        
-        
-    @commands.cooldown(1, 5, commands.BucketType.user)
-    @commands.slash_command(description='Рандомный участник.')
-    async def random_member(self, inter: disnake.CmdInter, text: str  = None):
-        member = random.choice([mem for mem in inter.guild.members]).mention
-        
-        embed = disnake.Embed(
-            description=f'{text} - {member}' if text else member,
-            colour=disnake.Colour.blue(),
-            timestamp=dt.now()
-        )
-        await inter.send(embed=embed, delete_after=300)
-        
                 
         
 def setup(bot: commands.Bot):
-    bot.add_cog(BoredMember(bot))
+    bot.add_cog(Bored(bot))

@@ -5,7 +5,7 @@ from disnake.ext import commands
 
 
 
-class Error(commands.Cog):
+class Errors(commands.Cog):
      def __init__(self, bot: commands.Bot):
           self.bot = bot
           
@@ -18,7 +18,7 @@ class Error(commands.Cog):
         
         
 def setup(bot: commands.Bot):
-     bot.add_cog(Error(bot))
+     bot.add_cog(Errors(bot))
         
         
      

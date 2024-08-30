@@ -11,7 +11,7 @@ from assets.pictures import bot_images
 
 
 
-class MembersAction(commands.Cog):
+class Member(commands.Cog):
      def __init__(self, bot: commands.Bot) -> None:
           self.bot = bot
      
@@ -43,4 +43,4 @@ class MembersAction(commands.Cog):
           
           
 def setup(bot: commands.Bot) -> None:
-     bot.add_cog(MembersAction(bot))
+     bot.add_cog(Member(bot))

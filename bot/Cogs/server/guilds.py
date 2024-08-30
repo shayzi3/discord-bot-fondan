@@ -7,7 +7,7 @@ from database.src.json.base import json_funcs
 
 
 
-class GuildAction(commands.Cog):
+class Guilds(commands.Cog):
      def __init__(self, bot: commands.Bot) -> None:
           self.bot = bot
           
@@ -42,4 +42,4 @@ class GuildAction(commands.Cog):
 
 
 def setup(bot: commands.Bot):
-     bot.add_cog(GuildAction(bot))
+     bot.add_cog(Guilds(bot))
