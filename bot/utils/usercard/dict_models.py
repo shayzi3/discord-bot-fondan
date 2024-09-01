@@ -9,7 +9,7 @@ async def get_dict_models(
      roles: str,
      msg: int
 ) -> tuple[dict]:
-     pages = 5
+     pages = 4
      
      model = {
           '1': {

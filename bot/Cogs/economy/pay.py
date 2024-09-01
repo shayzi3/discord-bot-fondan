@@ -5,6 +5,7 @@ from disnake.ext import commands
 
 from database.src.db.base import data_funcs
 from database.src.db.schemas import BaseMode
+from bot.utils.box import box
 
 
 
@@ -16,21 +17,19 @@ class Pay(commands.Cog):
         
      @staticmethod
      async def send_message_users(inter: disnake.CmdInter, member: disnake.Member, cash: int, comment: str | None = None) -> None:
-          emb_author = disnake.Embed(
+          emb_author = await box(
                description=f'{cash} монет отправлены успешно!',
-               colour=disnake.Colour.blue(),
-               timestamp=dt.now()
+               name_author=f'Кому: {member.name}',
+               icon_author=member.avatar
           )
-          emb_author.set_author(name=f'Кому: {member.name}', icon_url=member.avatar)
-        
-        
-          emb_member = disnake.Embed(
-               description=f'Вы получили {cash} монет.',
-               colour=disnake.Colour.blue(),
-               timestamp=dt.now()
+          emb_member = await box(
+               description=f'Вы Получили {cash} монет.',
+               name_author=f'От кого: {inter.author.name}',
+               icon_author=inter.author.avatar,
+               fields=(
+                    ('Комментарий', comment, True)
+               ) if comment else None
           )
-          emb_member.set_author(name=f'От кого: {inter.author.name}', icon_url=inter.author.avatar)
-          emb_member.add_field(name='Комментарий', value=comment) if comment else None
           
           await inter.send(embed=emb_author, ephemeral=True)
           await member.send(embed=emb_member)

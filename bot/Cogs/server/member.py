@@ -7,6 +7,7 @@ from disnake.ext import commands
 from database.src.db.base import data_funcs
 from database.src.json.base import json_funcs
 from assets.pictures import bot_images
+from bot.utils.box import box
 
 
 

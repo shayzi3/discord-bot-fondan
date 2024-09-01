@@ -1,10 +1,10 @@
-import random
 import disnake
 
 from disnake.ext import commands
 
 from database.src.db.base import data_funcs
 from database.src.db.schemas import BaseMode
+from bot.utils.box import box
 
 
 
@@ -25,12 +25,14 @@ class Gift(commands.Cog):
             mode=BaseMode.ON
         )
         
-        embed = disnake.Embed(
-            title='Подарок! 🎁', 
-            colour=disnake.Colour.blue(), 
-            description=' **Ты получаешь 25 монет!** '
+        
+        await inter.send(
+            embed=await box(
+                title='Подарок! 🎁',
+                description='**Ты получаешь 25 монет!**'
+            ),
+            ephemeral=True
         )
-        await inter.send(embed=embed)
         
         
         

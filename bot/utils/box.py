@@ -1,11 +1,12 @@
 import disnake
 
-from typing import Any, Annotated, Callable
+from typing import Any, Annotated
 from datetime import datetime as dt
 
 
 AnyType = Annotated[Any, None]
-TupleType = Annotated[tuple, None]
+TupleType = Annotated[tuple[tuple[Any]], None]
+
 
 
 async def box(

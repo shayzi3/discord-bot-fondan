@@ -4,6 +4,7 @@ from datetime import datetime as dt
 from disnake.ext import commands
 
 from database.src.db.base import data_funcs
+from bot.utils.box import box
 
 
 
@@ -24,13 +25,13 @@ class Money(commands.Cog):
           if member:
                text = f'**На балансе {member.mention} {moneys} монет**'   
 
-                    
-          embed = disnake.Embed(
-               description=text,
-               color=disnake.Colour.blue(),
-               timestamp=dt.now()
+
+          await inter.send(
+               embed=await box(
+                    description=text
+               ), 
+               ephemeral=True
           )
-          await inter.send(embed=embed, ephemeral=True)
             
             
 

@@ -2,6 +2,8 @@ import disnake
 
 from disnake.ext import commands
 
+from bot.utils.box import box
+
 
 class Purge(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
@@ -13,12 +15,12 @@ class Purge(commands.Cog):
     async def purge(self, inter: disnake.CmdInter, amount: int) -> None:
         await inter.channel.purge(limit=amount)
         
-        emb = disnake.Embed(
-            title=f'✅ Удалено {amount} сообщений.', 
-            colour=disnake.Colour.blue()
+        embed = await box(
+            title=f'✅ Удалено {amount} сообщений.',
+            name_author=inter.author.name,
+            icon_author=inter.author.avatar
         )
-        emb.set_author(name=inter.author.name, icon_url=inter.author.avatar)
-        await inter.send(embed=emb, delete_after=300)
+        await inter.send(embed=embed, delete_after=300)
 
 
 

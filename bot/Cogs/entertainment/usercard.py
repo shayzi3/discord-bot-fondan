@@ -11,9 +11,8 @@ class Usercard(commands.Cog):
         self.card = Card()
         
         
-    # Команда для показа карточки участника
     @commands.cooldown(1, 60, commands.BucketType.user)
-    @commands.slash_command(description='Профиль участника в виде карточки.')
+    @commands.slash_command(description='Карточка участника.')
     async def usercard(self, inter: disnake.CmdInter, member: disnake.Member | None = None):
         await inter.response.defer(ephemeral=True)
         

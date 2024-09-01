@@ -25,7 +25,7 @@ class Messages(commands.Cog):
                     await message.delete()
                         
                     title = f'{message.author.mention}, использование CAPS запрещено❗'
-                    return await message.channel.send(title, delete_after=120) 
+                    return await message.channel.send(title, delete_after=120.0) 
             
             await json_funcs.update_member(member=message.author)
                 
