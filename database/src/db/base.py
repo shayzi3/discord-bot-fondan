@@ -172,6 +172,22 @@ class DataBaseFuncs(DataBase):
             cash=moneys,
             mode=BaseMode.ON,
         )
+        
+        
+    @classmethod
+    async def get_top_balance(
+        cls,
+        id_guild: int
+    ) -> list[tuple]:
+        async with cls.session() as session:
+            sttm = select(Member.member_id, Member.member_cash, Member.member_name).filter_by(
+                guild_id=id_guild
+            ).order_by(Member.member_cash.desc())
+                
+            result = await session.execute(sttm)
+        return result.all()
+            
+            
 
 
 data_funcs = DataBaseFuncs()

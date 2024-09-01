@@ -1,8 +1,11 @@
 import disnake
 
-from datetime import datetime as dt
-
 from database.src.json.base import json_funcs
+from bot.utils.box import box
+from bot.utils.usercard.dict_models import get_dict_models
+
+
+
 
 
 async def return_pages(
@@ -10,44 +13,18 @@ async def return_pages(
      balance: int, 
      roles: str
 ) -> list[disnake.Embed]:
-     
-     page1 = disnake.Embed(
-          title=f'Карточка {user.name}', 
-          timestamp=dt.now(), 
-          colour=disnake.Colour.dark_magenta()
-     )
-     
-     page1.set_footer(text='Page 1/3')
-     page1.add_field(name='Nickname', value=user.name, inline=False)
-     page1.add_field(name='ID', value=user.id, inline=False)
-     page1.set_thumbnail(url=user.avatar)
-                    
-     
-     page2 = disnake.Embed(
-          title=f'Карточка {user.name}', 
-          timestamp=dt.now(), 
-          colour=disnake.Colour.dark_magenta()
-     )
-     
-     page2.set_footer(text='Page 2/3')
-     page2.add_field(name='Created Account', value=user.created_at.strftime("%d-%m-%Y %H:%M:%S"), inline=False)
-     page2.add_field(name='Joined', value=user.joined_at.strftime("%d-%m-%Y %H:%M:%S"), inline=False)
-     page2.set_thumbnail(url=user.avatar)
-                    
-                    
-     page3 = disnake.Embed(
-          title=f'Карточка {user.name}', 
-          timestamp=dt.now(), 
-          colour=disnake.Colour.dark_magenta()
-     )
      msg = await json_funcs.get_member_messages(user.id)
      
-     page3.set_footer(text='Page 3/3')
-     page3.add_field(name='Balance', value=balance, inline=False)
-     page3.add_field(name='Roles', value=roles, inline=False)
-     page3.add_field(name='Messages', value=msg, inline=False)
-     
-     page3.set_thumbnail(url=user.avatar)
-               
-               
-     return [page1, page2, page3]
+     model = await get_dict_models(
+          user=user,
+          balance=balance,
+          roles=roles,
+          msg=msg
+     )
+          
+     embeds = []
+     for m in model.keys():
+          embed = await box(**model[m])
+          
+          embeds.append(embed)
+     return embeds

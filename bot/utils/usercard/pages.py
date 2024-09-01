@@ -12,7 +12,7 @@ class Card:
      
      
      @staticmethod
-     async def usercad(ctx: disnake.CmdInter, user: disnake.Member = None) -> None:
+     async def usercad(ctx: disnake.CmdInter, user: disnake.Member | None = None) -> None:
           if not user:
                user = ctx.author
           
@@ -29,7 +29,7 @@ class Card:
           )
                
           view = buttons.PaginationButton()
-          await ctx.send(embed=pagination[0], view=view)
+          await ctx.send(embed=pagination[0], view=view, ephemeral=True)
           await view.wait()
                
           page = 0
@@ -55,6 +55,7 @@ class Card:
                     view = buttons.PaginationButton()
                     await ctx.edit_original_response(embed=pagination[page], view=view)
                     await view.wait()
+                         
                          
                if view.pagination == 'Stop':
                     return await ctx.delete_original_response()

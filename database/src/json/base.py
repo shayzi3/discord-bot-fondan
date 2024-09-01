@@ -45,7 +45,10 @@ class JsonDataFuncs:
      @classmethod
      async def get_member_messages(cls, member_id: int) -> int:
           file = await cls.__get_dict_from_file()
-          return file[str(member_id)]['member_messages']
+          
+          if str(member_id) in file.keys():
+               return file[str(member_id)]['member_messages']
+          return 0
      
           
      @classmethod

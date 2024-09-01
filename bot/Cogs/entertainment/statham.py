@@ -4,6 +4,7 @@ from datetime import datetime as dt
 from disnake.ext import commands
 
 from bot.scripts.getters import Get
+from bot.utils.box import box
 
 
 
@@ -18,12 +19,10 @@ class Statham(commands.Cog):
      async def statham(self, inter: disnake.CmdInter):
           citata = await self.get.get_citata()
           
-          embed = disnake.Embed(
-               colour=disnake.Colour.blue(),
-               timestamp=dt.now()
+          await inter.send(
+               embed=await box(image_url=citata), 
+               ephemeral=True
           )
-          embed.set_image(url=citata)
-          await inter.send(embed=embed, ephemeral=True)
           
           
 def setup(bot: commands.Bot):

@@ -6,6 +6,7 @@ from datetime import datetime as dt
 from disnake.ext import commands
 
 from bot.scripts.getters import Get
+from bot.utils.box import box 
 
 
 
@@ -28,11 +29,8 @@ class Members(commands.Cog):
                disnake.OptionChoice(name='True', value=True),
                disnake.OptionChoice(name='False', value=False)
      ])) -> None:
-          embed = disnake.Embed(
-               description=message,
-               color=disnake.Colour.blue(),
-               timestamp=dt.now()
-          )
+          embed = await box(description=message)
+          
           if not anonim:
                embed.set_author(name=f'От кого: {inter.author.name}', icon_url=inter.author.avatar)
 
@@ -50,10 +48,8 @@ class Members(commands.Cog):
      async def random_member(self, inter: disnake.CmdInter, text: str  = None):
           member = random.choice([mem for mem in inter.guild.members]).mention
         
-          embed = disnake.Embed(
-               description=f'{text} - {member}' if text else member,
-               colour=disnake.Colour.blue(),
-               timestamp=dt.now()
+          embed = await box(
+               description=f'{text} - {member}' if text else member
           )
           await inter.send(embed=embed, delete_after=300)
           

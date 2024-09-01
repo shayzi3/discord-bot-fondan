@@ -4,6 +4,8 @@ import disnake
 from datetime import datetime as dt
 from disnake.ext import commands
 
+from bot.utils.box import box
+
 
 
 class Avatar(commands.Cog):
@@ -18,14 +20,14 @@ class Avatar(commands.Cog):
                members = [mem for mem in inter.guild.members if not mem.bot]
                member = random.choice(members)
                
-          embed = disnake.Embed(
-               colour=disnake.Colour.blue(),
-               timestamp=dt.now()
+               
+          await inter.send(
+               embed=await box(
+                    name_author=member.name, 
+                    image_url=member.avatar.url
+               ), 
+               ephemeral=True
           )
-          embed.set_author(name=member.name)
-          embed.set_image(url=member.avatar.url)     
-          
-          await inter.send(embed=embed, ephemeral=True)
           
           
           

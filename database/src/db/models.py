@@ -22,7 +22,7 @@ class Member(Base):
      
      member_id:  Mapped[int] = mapped_column(nullable=False, unique=True, primary_key=True)
      member_name: Mapped[str] = mapped_column(nullable=False)
-     member_cash: Mapped[int] = mapped_column(nullable=False)
+     member_cash: Mapped[float] = mapped_column(nullable=False)
      created_at:  Mapped[str] = mapped_column(nullable=False)
      joinet_at: Mapped[str] = mapped_column(nullable=False)
      avatar: Mapped[str] = mapped_column(nullable=False)

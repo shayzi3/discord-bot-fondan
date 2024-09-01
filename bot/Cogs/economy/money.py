@@ -22,7 +22,7 @@ class Money(commands.Cog):
           
           text = f'**Твой баланс {moneys}**'
           if member:
-               text = f'**На балансе {member.mention} {moneys}**'   
+               text = f'**На балансе {member.mention} {moneys} монет**'   
 
                     
           embed = disnake.Embed(
