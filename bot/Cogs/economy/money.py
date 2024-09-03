@@ -1,6 +1,5 @@
 import disnake
 
-from datetime import datetime as dt
 from disnake.ext import commands
 
 from database.src.db.base import data_funcs

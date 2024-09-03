@@ -27,19 +27,21 @@ class JsonDataFuncs:
      async def update_member(cls, member: disnake.Member) -> None:
           file = await cls.__get_dict_from_file()
           
-          if str(member.id) not in file.keys():
-               file[member.id] = {
-                    'member_id': member.id,
-                    'member_name': member.name,
-                    'guild_id': member.guild.id,
-                    'guild_name': member.guild.name,
-                    'member_messages': 1
-               }
-              
-          else:
-               file[str(member.id)]['member_messages'] += 1
+
+          if not member.bot:
+               if str(member.id) not in file.keys():
+                    file[member.id] = {
+                         'member_id': member.id,
+                         'member_name': member.name,
+                         'guild_id': member.guild.id,
+                         'guild_name': member.guild.name,
+                         'member_messages': 1
+                    }
                
-          await cls.__save_dict_in_file(file)
+               else:
+                    file[str(member.id)]['member_messages'] += 1
+                    
+               await cls.__save_dict_in_file(file)
           
           
      @classmethod

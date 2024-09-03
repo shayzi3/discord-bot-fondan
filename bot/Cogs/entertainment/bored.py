@@ -1,7 +1,5 @@
-import random
 import disnake
 
-from datetime import datetime as dt
 from disnake.ext import commands
 
 from bot.scripts.getters import Get

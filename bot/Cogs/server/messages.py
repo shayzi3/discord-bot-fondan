@@ -1,6 +1,8 @@
 from string import ascii_letters
+
 from disnake.ext import commands
 from disnake import MessageCommandInteraction
+from disnake import DMChannel
 
 from database.src.json.base import json_funcs
 
@@ -27,7 +29,8 @@ class Messages(commands.Cog):
                     title = f'{message.author.mention}, использование CAPS запрещено❗'
                     return await message.channel.send(title, delete_after=120.0) 
             
-            await json_funcs.update_member(member=message.author)
+            if not isinstance(message.channel, DMChannel):
+                await json_funcs.update_member(member=message.author)
                 
         
         

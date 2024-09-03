@@ -1,4 +1,3 @@
-from typing import Callable
 import disnake
 
 from disnake.ext import commands

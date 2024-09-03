@@ -1,7 +1,6 @@
 import random
 import disnake
 
-from datetime import datetime as dt
 from disnake.ext import commands
 
 from bot.utils.box import box
