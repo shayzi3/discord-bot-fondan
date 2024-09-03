@@ -3,7 +3,7 @@ import disnake
 
 from disnake.ext import commands
 
-from bot.scripts.getters import Get
+from bot.utils.getters import Get
 from bot.utils.box import box 
 
 

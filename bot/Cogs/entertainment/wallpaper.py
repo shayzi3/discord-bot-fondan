@@ -3,7 +3,7 @@ import disnake
 
 from disnake.ext import commands
 
-from bot.scripts.getters import Get
+from bot.utils.getters import Get
 
 
 
@@ -14,7 +14,7 @@ class Wallpaper(commands.Cog):
           
           
           
-     @commands.cooldown(1, 65, commands.BucketType.user)
+     @commands.cooldown(1, 30, commands.BucketType.user)
      @commands.slash_command(description='Обои рабочего стола')
      async def wallpaper(self, inter: disnake.CmdInter) -> None:
           await inter.response.defer(ephemeral=True)

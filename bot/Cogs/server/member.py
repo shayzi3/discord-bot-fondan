@@ -20,15 +20,14 @@ class Member(commands.Cog):
      @commands.Cog.listener()
      async def on_member_join(self, member: disnake.Member) -> None:
           await data_funcs.insert_new_user(member)
-          
-          embed = disnake.Embed(
-               title=f'Привет, {member.name}',
-               colour=disnake.Colour.blue(),
-               timestamp=dt.now()
+           
+          await member.send(
+               embed=await box(
+                    title=f'Привет, {member.name}',
+                    description=f'Добро пожаловать на сервер {member.guild.name}!',
+                    thumbnail_file=disnake.File(fp=random.choice(bot_images))
+               )
           )
-          embed.set_thumbnail(file=disnake.File(fp=random.choice(bot_images)))
-                    
-          await member.send(embed=embed)
           
           
           

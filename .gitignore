@@ -3,5 +3,4 @@
 __pycache__
 .env
 test.py 
-other.py
-bot/scripts/parsers
+script/
